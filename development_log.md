@@ -15,7 +15,7 @@ Key choices:
 - `auto_now_add=True` is used for `created_at` to automatically set the timestamp when a task is created.
 - `is_completed` helps in toggling the completion state of a task.
 
-## Step 2: Create and apply migrations
+## Step 3: Create and apply migrations
 
 We generated and applied database migrations for the `Task` model using the following commands:
 
@@ -24,5 +24,10 @@ python manage.py makemigrations tasks
 python manage.py migrate
 ```
 This creates the necessary database table to store Task records.
+
+## Step 4: Create base template
+
+We created a reusable base template for all pages at `tasks/templates/tasks/base.html`. This will ensure layout consistency and reduce duplication.
+
 
 🚀 Status: Project is on progress
