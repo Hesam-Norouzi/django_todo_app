@@ -43,6 +43,15 @@ We created a reusable base template for all pages at `tasks/templates/tasks/base
 - Built `add_task.html` template with a form.
 - Linked to the add task page from the task list view.
 
+### Step 7: Edit and Delete Tasks
+
+- Created two new views: `edit_task` and `delete_task`, both restricted to the task owner.
+- Added corresponding templates: `edit_task.html` and `delete_task.html`.
+- Configured URLs for editing and deleting tasks.
+- Updated task list UI to include "Edit" and "Delete" buttons next to each task.
+
+These features allow users to manage their tasks more efficiently.
+
 
 
 🚀 Status: Project is on progress

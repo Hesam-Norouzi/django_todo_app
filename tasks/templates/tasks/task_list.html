@@ -1,13 +1,19 @@
 {% extends "tasks/base.html" %}
 {% block content %}
   <h2 class="text-xl font-bold mb-4">Your Tasks</h2>
+  <a href="{% url 'add_task' %}" class="bg-green-500 text-green px-4 py-2 rounded hover:bg-green-600">+ New Task</a>
   {% if tasks %}
-    <a href="{% url 'add_task' %}" class="bg-green-500 text-green px-4 py-2 rounded hover:bg-green-600">+ New Task</a>
     <ul class="space-y-2">
       {% for task in tasks %}
         <li class="bg-white p-4 rounded shadow flex justify-between items-center">
-          <span>{{ task.title }}</span>
-          <span class="text-sm text-gray-500">{{ task.created|date:"Y-m-d H:i" }}</span>
+          <div class="d-flex justify-content-between">
+            <span>{{ task.title }}</span>
+            <span class="text-sm text-gray-500">{{ task.created|date:"Y-m-d H:i" }}</span>
+            <div>
+              <a href="{% url 'edit_task' task.id %}" class="btn btn-sm btn-warning">Edit</a>
+              <a href="{% url 'delete_task' task.id %}" class="btn btn-sm btn-danger">Delete</a>
+            </div>
+          </div>
         </li>
       {% endfor %}
     </ul>
