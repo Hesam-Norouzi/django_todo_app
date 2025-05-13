@@ -36,5 +36,13 @@ We created a reusable base template for all pages at `tasks/templates/tasks/base
 - Added `task_list.html` template with Tailwind styling.
 - Configured URLs to route `'/'` to the task list view.
 
+## Step 6: Add Task Functionality
+
+- Created `TaskForm` using `ModelForm` for task creation.
+- Added `add_task` view to handle GET and POST requests.
+- Built `add_task.html` template with a form.
+- Linked to the add task page from the task list view.
+
+
 
 🚀 Status: Project is on progress

@@ -2,6 +2,7 @@
 {% block content %}
   <h2 class="text-xl font-bold mb-4">Your Tasks</h2>
   {% if tasks %}
+    <a href="{% url 'add_task' %}" class="bg-green-500 text-green px-4 py-2 rounded hover:bg-green-600">+ New Task</a>
     <ul class="space-y-2">
       {% for task in tasks %}
         <li class="bg-white p-4 rounded shadow flex justify-between items-center">
