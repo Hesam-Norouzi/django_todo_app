@@ -1,0 +1,16 @@
+{% extends "tasks/base.html" %}
+{% block content %}
+  <h2 class="text-xl font-bold mb-4">Your Tasks</h2>
+  {% if tasks %}
+    <ul class="space-y-2">
+      {% for task in tasks %}
+        <li class="bg-white p-4 rounded shadow flex justify-between items-center">
+          <span>{{ task.title }}</span>
+          <span class="text-sm text-gray-500">{{ task.created|date:"Y-m-d H:i" }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No tasks yet.</p>
+  {% endif %}
+{% endblock %}

@@ -29,5 +29,12 @@ This creates the necessary database table to store Task records.
 
 We created a reusable base template for all pages at `tasks/templates/tasks/base.html`. This will ensure layout consistency and reduce duplication.
 
+## Step 5: Display Task List
+
+- Created `task_list` view to show only the authenticated user's tasks.
+- Used `@login_required` decorator to restrict access.
+- Added `task_list.html` template with Tailwind styling.
+- Configured URLs to route `'/'` to the task list view.
+
 
 🚀 Status: Project is on progress
