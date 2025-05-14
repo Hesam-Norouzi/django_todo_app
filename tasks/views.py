@@ -41,3 +41,10 @@ def delete_task(request, task_id):
         task.delete()
         return redirect('task_list')
     return render(request, 'tasks/delete_task.html', {'task': task})
+
+@login_required
+def toggle_complete(request, task_id):
+    task = get_object_or_404(Task, id=task_id, user=request.user)
+    task.complete = not task.complete
+    task.save()
+    return redirect('task_list')

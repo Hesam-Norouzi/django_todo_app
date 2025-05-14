@@ -52,6 +52,14 @@ We created a reusable base template for all pages at `tasks/templates/tasks/base
 
 These features allow users to manage their tasks more efficiently.
 
+## Step 8: Mark Task as Completed
+
+- Added `complete` BooleanField to `Task` model.
+- Created `toggle_complete` view to switch task status.
+- Added a toggle button to task list with dynamic style.
+- Displayed completed tasks with strike-through and muted color.
+
+
 
 
 🚀 Status: Project is on progress
