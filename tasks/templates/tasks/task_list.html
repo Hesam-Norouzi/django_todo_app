@@ -4,8 +4,15 @@
 <div class="container mt-5">
     <h2 class="mb-4">📝 My To-Do List</h2>
 
-    <div class="mb-3">
-        <a href="{% url 'add_task' %}" class="btn btn-success">+ New Task</a>
+        <div class="mb-3">
+          <a href="{% url 'add_task' %}" class="btn btn-success me-2">+ New Task</a>
+      
+          <!-- Filter Buttons -->
+          <a href="?filter=all" class="btn btn-outline-primary {% if request.GET.filter == 'all' or not request.GET.filter %}active{% endif %}">All</a>
+          <a href="?filter=completed" class="btn btn-outline-primary {% if request.GET.filter == 'completed' %}active{% endif %}">Completed</a>
+          <a href="?filter=pending" class="btn btn-outline-primary {% if request.GET.filter == 'pending' %}active{% endif %}">Pending</a>
+      </div>
+      
     </div>
 
     {% if tasks %}

@@ -48,3 +48,16 @@ def toggle_complete(request, task_id):
     task.complete = not task.complete
     task.save()
     return redirect('task_list')
+
+@login_required
+def task_list(request):
+    filter_option = request.GET.get('filter', 'all')
+
+    if filter_option == 'completed':
+        tasks = Task.objects.filter(user=request.user, complete=True)
+    elif filter_option == 'pending':
+        tasks = Task.objects.filter(user=request.user, complete=False)
+    else:
+        tasks = Task.objects.filter(user=request.user)
+
+    return render(request, 'tasks/task_list.html', {'tasks': tasks})

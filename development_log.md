@@ -59,6 +59,11 @@ These features allow users to manage their tasks more efficiently.
 - Added a toggle button to task list with dynamic style.
 - Displayed completed tasks with strike-through and muted color.
 
+## Step 9: Filter Tasks
+- Updated task_list view to support filtering by completed status.
+- Added filter buttons (All / Completed / Pending) to the template.
+- Highlighted active filter with Bootstrap active class.
+
 
 
 
