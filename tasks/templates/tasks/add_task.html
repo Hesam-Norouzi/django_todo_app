@@ -1,12 +1,29 @@
-{% extends "tasks/base.html" %}
+
+{% extends 'tasks/base.html' %}
+{% load form_tags %}
 {% block content %}
-  <h2 class="text-xl font-bold mb-4">Add New Task</h2>
-  <form method="post" class="space-y-4">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-      Add Task
-    </button>
-  </form>
-  <a href="{% url 'task_list' %}" class="text-blue-500">Back to Task List</a>
+<div class="container mt-5">
+    <h2 class="mb-4">➕ Add New Task</h2>
+    <form method="post" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_title" class="form-label">Title</label>
+            {{ form.title|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Description</label>
+            {{ form.description|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="id_priority" class="form-label">Priority</label>
+            {{ form.priority|add_class:"form-select" }}
+        </div>
+        <div class="mb-3">
+            <label for="id_due_date" class="form-label">Due date</label>
+            {{ form.due_date|add_class:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-success">Add Task</button>
+        <a href="{% url 'task_list' %}" class="btn btn-link">Back to Task List</a>
+    </form>
+</div>
 {% endblock %}
