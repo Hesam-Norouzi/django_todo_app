@@ -4,30 +4,37 @@
 <div class="container mt-5">
     <h2 class="mb-4">📝 My To-Do List</h2>
 
-        <div class="mb-3">
-          <a href="{% url 'add_task' %}" class="btn btn-success me-2">+ New Task</a>
-      
-          <!-- Filter Buttons -->
-          <a href="?filter=all" class="btn btn-outline-primary {% if request.GET.filter == 'all' or not request.GET.filter %}active{% endif %}">All</a>
-          <a href="?filter=completed" class="btn btn-outline-primary {% if request.GET.filter == 'completed' %}active{% endif %}">Completed</a>
-          <a href="?filter=pending" class="btn btn-outline-primary {% if request.GET.filter == 'pending' %}active{% endif %}">Pending</a>
-      </div>
-      
+    <div class="d-flex justify-content-between mb-3">
+        <a href="{% url 'add_task' %}" class="btn btn-success">+ New Task</a>
+
+        <form method="get" class="d-flex">
+            <select name="filter" class="form-select me-2" onchange="this.form.submit()">
+                <option value="all" {% if request.GET.filter == 'all' %}selected{% endif %}>All</option>
+                <option value="completed" {% if request.GET.filter == 'completed' %}selected{% endif %}>Completed</option>
+                <option value="pending" {% if request.GET.filter == 'pending' %}selected{% endif %}>Pending</option>
+            </select>
+
+            <input type="text" name="q" class="form-control me-2" placeholder="Search tasks..." value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+        </form>
     </div>
-    <form method="get" class="mb-3">
-      <input type="text" name="q" class="form-control d-inline w-50" placeholder="Search tasks..." value="{{ request.GET.q }}">
-      <button type="submit" class="btn btn-primary ms-2">Search</button>
-  </form>
-  
+
     {% if tasks %}
         {% for task in tasks %}
-            <div class="card mb-3 shadow-sm">
-              <div class="card-body d-flex justify-content-between align-items-center {% if task.completed %}bg-light{% endif %}" style="{% if task.completed %}opacity: 0.6;{% endif %}">
+            <div class="card mb-3 shadow-sm {% if task.priority == 'high' %}border-danger{% elif task.priority == 'medium' %}border-warning{% else %}border-success{% endif %}">
+                <div class="card-body d-flex justify-content-between align-items-center {% if task.complete %}text-muted text-decoration-line-through{% endif %}">
                     <div>
-                        <h5 class="card-title mb-0">{{ task.title }}</h5>
+                        <h5 class="card-title mb-1">{{ task.title }}</h5>
+                        <p class="mb-1">
+                            <small class="text-muted">
+                                Priority: <strong class="text-capitalize">{{ task.priority }}</strong>
+                            </small><br>
+                            {% if task.due_date %}
+                                <small class="text-muted">Due: {{ task.due_date }}</small>
+                            {% endif %}
+                        </p>
                     </div>
                     <div>
-                        <small class="text-muted me-3">{{ task.created|date:"Y-m-d H:i" }}</small>
                         <a href="{% url 'toggle_complete' task.id %}" class="btn btn-sm {% if task.complete %}btn-warning{% else %}btn-success{% endif %}">
                             {% if task.complete %}Mark as Incomplete{% else %}Mark as Done{% endif %}
                         </a>
@@ -37,33 +44,32 @@
                 </div>
             </div>
         {% endfor %}
+
+        <!-- Pagination controls -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                {% if tasks.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ tasks.previous_page_number }}&filter={{ request.GET.filter }}&q={{ request.GET.q }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                {% endif %}
+
+                <li class="page-item disabled"><span class="page-link">Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}</span></li>
+
+                {% if tasks.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ tasks.next_page_number }}&filter={{ request.GET.filter }}&q={{ request.GET.q }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Next</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+
     {% else %}
-        <p>No tasks yet. <a href="{% url 'add_task' %}">Create one</a>!</p>
+        <p>No tasks found. <a href="{% url 'add_task' %}">Create one</a>!</p>
     {% endif %}
 </div>
-<!-- Pagination Controls -->
-<div class="mt-4">
-  <nav>
-      <ul class="pagination justify-content-center">
-          {% if page_obj.has_previous %}
-              <li class="page-item">
-                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&filter={{ filter_option }}">Previous</a>
-              </li>
-          {% else %}
-              <li class="page-item disabled"><span class="page-link">Previous</span></li>
-          {% endif %}
-
-          <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
-
-          {% if page_obj.has_next %}
-              <li class="page-item">
-                  <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&filter={{ filter_option }}">Next</a>
-              </li>
-          {% else %}
-              <li class="page-item disabled"><span class="page-link">Next</span></li>
-          {% endif %}
-      </ul>
-  </nav>
-</div>
-
 {% endblock %}

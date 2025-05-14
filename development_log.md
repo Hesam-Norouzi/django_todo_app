@@ -77,4 +77,14 @@ These features allow users to manage their tasks more efficiently.
 - Updated template to include pagination controls with Bootstrap styling
 - Improved UX for users with many tasks
 
+## Step 12: Priority and Due Date
+
+- Added `priority` (low, medium, high) and `due_date` fields to Task model
+- Updated forms and templates to support the new fields
+- Used Bootstrap border color classes to visually differentiate tasks by priority
+- Displayed due date if available
+- Applied Django migrations to reflect model changes
+
+
+
 🚀 Status: Project is on progress
