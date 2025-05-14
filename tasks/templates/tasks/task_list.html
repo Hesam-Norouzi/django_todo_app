@@ -41,4 +41,29 @@
         <p>No tasks yet. <a href="{% url 'add_task' %}">Create one</a>!</p>
     {% endif %}
 </div>
+<!-- Pagination Controls -->
+<div class="mt-4">
+  <nav>
+      <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&filter={{ filter_option }}">Previous</a>
+              </li>
+          {% else %}
+              <li class="page-item disabled"><span class="page-link">Previous</span></li>
+          {% endif %}
+
+          <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+
+          {% if page_obj.has_next %}
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}&filter={{ filter_option }}">Next</a>
+              </li>
+          {% else %}
+              <li class="page-item disabled"><span class="page-link">Next</span></li>
+          {% endif %}
+      </ul>
+  </nav>
+</div>
+
 {% endblock %}

@@ -3,23 +3,34 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 from .forms import TaskForm
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 @login_required
 def task_list(request):
     query = request.GET.get('q', '')
     filter_option = request.GET.get('filter', 'all')
 
-    tasks = Task.objects.filter(user=request.user).order_by('-created')
-
-    if query:
-        tasks = tasks.filter(Q(title__icontains=query))
+    tasks = Task.objects.filter(user=request.user)
 
     if filter_option == 'completed':
         tasks = tasks.filter(complete=True)
     elif filter_option == 'pending':
         tasks = tasks.filter(complete=False)
 
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
+    if query:
+        tasks = tasks.filter(Q(title__icontains=query))
+
+    tasks = tasks.order_by('-created')
+    paginator = Paginator(tasks, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'tasks/task_list.html', {
+        'tasks': page_obj,
+        'query': query,
+        'filter_option': filter_option,
+        'page_obj': page_obj,
+    })
 
 
 @login_required
