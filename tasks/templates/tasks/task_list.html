@@ -14,7 +14,11 @@
       </div>
       
     </div>
-
+    <form method="get" class="mb-3">
+      <input type="text" name="q" class="form-control d-inline w-50" placeholder="Search tasks..." value="{{ request.GET.q }}">
+      <button type="submit" class="btn btn-primary ms-2">Search</button>
+  </form>
+  
     {% if tasks %}
         {% for task in tasks %}
             <div class="card mb-3 shadow-sm">

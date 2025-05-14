@@ -64,7 +64,11 @@ These features allow users to manage their tasks more efficiently.
 - Added filter buttons (All / Completed / Pending) to the template.
 - Highlighted active filter with Bootstrap active class.
 
-
+## Step 10:Task Filtering and Search
+- Implemented filter by status (completed, pending, all)
+- Added search functionality using `title__icontains`
+- Combined filter and search into a single `task_list` view
+- Ensured task visibility is limited to the logged-in user
 
 
 🚀 Status: Project is on progress

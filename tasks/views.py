@@ -2,11 +2,25 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 from .forms import TaskForm
+from django.db.models import Q
 
 @login_required
 def task_list(request):
+    query = request.GET.get('q', '')
+    filter_option = request.GET.get('filter', 'all')
+
     tasks = Task.objects.filter(user=request.user).order_by('-created')
+
+    if query:
+        tasks = tasks.filter(Q(title__icontains=query))
+
+    if filter_option == 'completed':
+        tasks = tasks.filter(complete=True)
+    elif filter_option == 'pending':
+        tasks = tasks.filter(complete=False)
+
     return render(request, 'tasks/task_list.html', {'tasks': tasks})
+
 
 @login_required
 def add_task(request):
@@ -49,15 +63,3 @@ def toggle_complete(request, task_id):
     task.save()
     return redirect('task_list')
 
-@login_required
-def task_list(request):
-    filter_option = request.GET.get('filter', 'all')
-
-    if filter_option == 'completed':
-        tasks = Task.objects.filter(user=request.user, complete=True)
-    elif filter_option == 'pending':
-        tasks = Task.objects.filter(user=request.user, complete=False)
-    else:
-        tasks = Task.objects.filter(user=request.user)
-
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
